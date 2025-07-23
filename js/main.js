@@ -35,6 +35,11 @@ ipcMain.handle('load_file', async (event, file_path) => {
 	return rm_loader.load(file_path);
 });
 
+ipcMain.handle('get_basename', async (event, file_path) => {
+    return path.basename(file_path);
+});
+
+
 ipcMain.on('get_version', (event) => {
 	event.returnValue = app.getVersion();
 });
