@@ -11,7 +11,7 @@ const rm_loader = require('./rm_load.js');
 // Create the UI
 function createWindow() {
 	const mainwin = new BrowserWindow({
-		width: 1000,
+		width: 2000,
 		height: 1200,
 		webPreferences: {
 			nodeIntegration: false,

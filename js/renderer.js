@@ -456,13 +456,18 @@ function build_sections(json, context) {
 		//       than defined in the game data. I don't know if the game can
 		//       change the definition of these fields, but they are hard-coded
 		//       at https://dev.azure.com/je-can-code/RPG%20Maker/_git/rmmz?path=/test-bed/js/rmmz_objects.js&version=GC865a2d06c3b3459496ec380577156ea8ddfb511e&line=2402&lineEnd=2403&lineStartColumn=1&lineEndColumn=1&lineStyle=plain&_a=contents
+// Character section
 		let party = new section('Characters');
-		// Build the character sections for every character in the party
-		let party_actors = get_rm_arr(json['party'], '_actors');
-		party_actors.forEach((actor_idx) => {
-			let party_ctx = build_attribute_context(); // Performs the mapping described above
-			let actor_arr = get_rm_arr(json['actors'], '_data');
-			party.add_item(new character_item(actor_arr[actor_idx], party_ctx));
+		// Get the master list of ALL actors from the save file.
+		let all_actors_data = get_rm_arr(json['actors'], '_data');
+
+		// Iterate over every actor in the master list.
+		all_actors_data.forEach((actor_data) => {
+			// The save file contains 'null' for empty character slots. We must skip them.
+			if (actor_data) {
+				let party_ctx = build_attribute_context();
+				party.add_item(new character_item(actor_data, party_ctx));
+			}
 		});
 		sections.push(party);
 
